@@ -20,5 +20,7 @@ Please be careful and do NOT install this on production systems. Also make sure 
 
 支持接入天猫、小度、叮咚等智能音箱
 
+原作者为大大[cnk700i](https://github.com/cnk700i/havcs)，我只是个搬运工，后面可能会基于此做些许~~改进~~破坏，谁知道呢
+
 # Changes
 You can find change log under [releases](https://github.com/gyk001/havcs/releases)
