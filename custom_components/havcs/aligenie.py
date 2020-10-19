@@ -277,12 +277,14 @@ class VoiceControlAligenie(PlatformParameter, VoiceControlProcessor):
         return raw_device_type if raw_device_type in self._device_type_alias else self.device_type_map_h2p.get(raw_device_type)
 
     def _discovery_process_device_info(self, device_id,  device_type, device_name, zone, properties, actions):
+        # 截取设备名
+        simple_name = device_name[len(zone):] if  device_name.startswith(zone) else device_name;
         return {
             'deviceId': encrypt_device_id(device_id),
-            'deviceName': device_name,
+            'deviceName': simple_name,
             'deviceType': device_type,
             'zone': zone,
-            'model': device_name,
+            'model': simple_name,
             'brand': 'HomeAssistant',
             'icon': 'https://d33wubrfki0l68.cloudfront.net/cbf939aa9147fbe89f0a8db2707b5ffea6c192cf/c7c55/images/favicon-192x192-full.png',
             'properties': properties,
