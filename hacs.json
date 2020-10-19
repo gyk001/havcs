@@ -1,3 +1,4 @@
 {
-    "name": "havcs智能音箱控制"
+    "name": "havcs智能音箱控制",
+    "homeassistant": "0.114.4"
 }
