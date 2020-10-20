@@ -374,6 +374,15 @@
                 </div>
             </div>
             <div class="weui-cell">
+                <div class="weui-cell__hd"><label for="" class="weui-label">
+                        <div>model</div>
+                        <div>（型号）</div>
+                    </label></div>
+                <div class="weui-cell__bd weui-cell_primary">
+                    <input id='model' class="weui-input" type="text" v-model='device.model' placeholder="填写设备型号" />
+                </div>
+            </div>
+            <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label"><div class="required">visable</div><div>（平台）</div></label></div>
                 <div class="weui-cell__bd weui-cell_primary">
                     <input id="visable" class="weui-input" type="text" v-model="device.visable" placeholder="选择音箱平台"/>
