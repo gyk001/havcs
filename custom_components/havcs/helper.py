@@ -9,7 +9,7 @@ from homeassistant.exceptions import ServiceNotFound
 from homeassistant.helpers.state import AsyncTrackStates
 from homeassistant.core import HomeAssistant
 
-from .const import DATA_HAVCS_SETTINGS, INTEGRATION, DATA_HAVCS_ITEMS, ATTR_DEVICE_VISABLE, ATTR_DEVICE_ID, ATTR_DEVICE_ENTITY_ID, ATTR_DEVICE_TYPE, ATTR_DEVICE_NAME, ATTR_DEVICE_ZONE, ATTR_DEVICE_ATTRIBUTES, ATTR_DEVICE_ACTIONS, ATTR_DEVICE_PROPERTIES
+from .const import DATA_HAVCS_SETTINGS, INTEGRATION, DATA_HAVCS_ITEMS, ATTR_DEVICE_VISABLE, ATTR_DEVICE_ID, ATTR_DEVICE_ENTITY_ID, ATTR_DEVICE_TYPE, ATTR_DEVICE_NAME, ATTR_DEVICE_ZONE, ATTR_DEVICE_ATTRIBUTES, ATTR_DEVICE_ACTIONS, ATTR_DEVICE_PROPERTIES, ATTR_DEVICE_MODEL
 from .device import VoiceControllDevice
 
 
@@ -69,7 +69,7 @@ class VoiceControlProcessor:
             _LOGGER.debug("[%s] request from %s match filter, return blank info", LOGGER_NAME, request_from)
             return None, devices, entity_ids
         for vc_device in self.vcdm.all(self._hass):
-            device_id, raw_device_type, device_name, zone, device_properties, raw_actions = self.vcdm.get_device_attrs(vc_device.attributes)
+            device_id, raw_device_type, device_name, zone, device_properties, raw_actions, device_model = self.vcdm.get_device_attrs(vc_device.attributes)
             properties = self._discovery_process_propertites(device_properties)
             actions = self._discovery_process_actions(device_properties, raw_actions)
             device_type = self._discovery_process_device_type(raw_device_type)
@@ -263,7 +263,7 @@ class VoiceControlDeviceManager:
             #     entity_registry._async_update_entity(entity_id, device_id=device.device_id)
 
     def get_device_attrs(self, device_attributes) -> list:
-        return device_attributes.get(ATTR_DEVICE_ID),device_attributes.get(ATTR_DEVICE_TYPE),device_attributes.get(ATTR_DEVICE_NAME),device_attributes.get(ATTR_DEVICE_ZONE),device_attributes.get(ATTR_DEVICE_PROPERTIES),device_attributes.get(ATTR_DEVICE_ACTIONS)
+        return device_attributes.get(ATTR_DEVICE_ID),device_attributes.get(ATTR_DEVICE_TYPE),device_attributes.get(ATTR_DEVICE_NAME),device_attributes.get(ATTR_DEVICE_ZONE),device_attributes.get(ATTR_DEVICE_PROPERTIES),device_attributes.get(ATTR_DEVICE_ACTIONS),device_attributes.get(ATTR_DEVICE_MODEL)
 
     def get_device_related_entities(self, hass, raw_attributes: dict, device_type: str = None) -> list:
         entity_ids = []
