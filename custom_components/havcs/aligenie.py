@@ -6,7 +6,7 @@ import async_timeout
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from .util import decrypt_device_id, encrypt_device_id
 from .helper import VoiceControlProcessor, VoiceControlDeviceManager
-from .const import ATTR_DEVICE_ACTIONS
+from .const import ATTR_DEVICE_ACTIONS, ATTR_DEVICE_MODEL
 
 _LOGGER = logging.getLogger(__name__)
 # _LOGGER.setLevel(logging.DEBUG)
@@ -276,17 +276,20 @@ class VoiceControlAligenie(PlatformParameter, VoiceControlProcessor):
         # raw_device_type guess from device_id's domain transfer to platform style
         return raw_device_type if raw_device_type in self._device_type_alias else self.device_type_map_h2p.get(raw_device_type)
 
-    def _discovery_process_device_info(self, device_id,  device_type, device_name, zone, properties, actions):
+    def _discovery_process_device_info(self, device_id,  device_type, device_name, zone, properties, actions, vc_device):
         # 截取设备名
         simple_name = device_name[len(zone):] if  device_name.startswith(zone) else device_name;
+        device_model = vc_device.attributes.get(ATTR_DEVICE_MODEL)  if vc_device.attributes.get(ATTR_DEVICE_MODEL)  else simple_name;
+        device_icon = 'https://img12.360buyimg.com/n1/s450x450_jfs/t6265/174/580418271/84245/48933633/5941f79aN0ffd7185.jpg' if device_type == 'light' else 'https://d33wubrfki0l68.cloudfront.net/cbf939aa9147fbe89f0a8db2707b5ffea6c192cf/c7c55/images/favicon-192x192-full.png';
+        device_brand = 'FSL 佛山照明'  if device_type == 'light' else 'HomeAssistant';
         return {
             'deviceId': encrypt_device_id(device_id),
             'deviceName': simple_name,
             'deviceType': device_type,
             'zone': zone,
-            'model': simple_name,
-            'brand': 'HomeAssistant',
-            'icon': 'https://d33wubrfki0l68.cloudfront.net/cbf939aa9147fbe89f0a8db2707b5ffea6c192cf/c7c55/images/favicon-192x192-full.png',
+            'model': device_model,
+            'brand': device_brand,
+            'icon':  device_icon,
             'properties': properties,
             'actions': actions
             #'extensions':{'extension1':'','extension2':''}

@@ -225,7 +225,7 @@ class VoiceControlWeixin(PlatformParameter, VoiceControlProcessor):
     def _discovery_process_device_type(self, raw_device_type):
         return self.device_type_map_h2p.get(raw_device_type)
 
-    def _discovery_process_device_info(self, device_id,  device_type, device_name, zone, properties, actions):
+    def _discovery_process_device_info(self, device_id,  device_type, device_name, zone, properties, actions, vc_device):
         return {
             'deviceId': encrypt_device_id(device_id),
             'deviceName': {'cn':device_name,'en':'undefined'},

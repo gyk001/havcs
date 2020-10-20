@@ -291,7 +291,7 @@ class VoiceControlDueros(PlatformParameter, VoiceControlProcessor):
         # raw_device_type guess from device_id's domain transfer to platform style
         return raw_device_type if raw_device_type in self._device_type_alias else self.device_type_map_h2p.get(raw_device_type)
 
-    def _discovery_process_device_info(self, device_id,  device_type, device_name, zone, properties, actions):
+    def _discovery_process_device_info(self, device_id,  device_type, device_name, zone, properties, actions, vc_device):
         return {
             'applianceId': encrypt_device_id(device_id),
             'friendlyName': device_name,

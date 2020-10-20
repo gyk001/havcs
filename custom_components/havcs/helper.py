@@ -29,7 +29,7 @@ class VoiceControlProcessor:
     def _discovery_process_device_type(self, raw_device_type) -> None:
         raise NotImplementedError()
 
-    def _discovery_process_device_info(self, device_id, device_type, device_name, zone, properties, actions) -> None:
+    def _discovery_process_device_info(self, device_id, device_type, device_name, zone, properties, actions, vc_device) -> None:
         raise NotImplementedError()
   
     def _control_process_propertites(self, device_properties, action) -> None:
@@ -76,7 +76,7 @@ class VoiceControlProcessor:
             if None in (device_type, device_name, zone) or [] in (properties, actions):
                 _LOGGER.debug("[%s] discovery command: can't get all info of entity %s, pass. [device_type = %s(%s), device_name = %s, zone = %s, properties = %s, actions = %s(%s)]", LOGGER_NAME, device_id, device_type, raw_device_type, device_name, zone, properties, actions, raw_actions)
             else:
-                devices.append(self._discovery_process_device_info(device_id, device_type, device_name, zone, properties, actions))
+                devices.append(self._discovery_process_device_info(device_id, device_type, device_name, zone, properties, actions, vc_device))
                 entity_ids.append(device_id)
         return None, devices, entity_ids
 
